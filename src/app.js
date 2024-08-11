@@ -13,6 +13,10 @@ server.get('/items', (req, res) => {
 })
 
 server.get('/items/:id', (req, res) => {
+  if (!Number.isInteger(Number(req.params.id))) return res.sendStatus(400)
+  const filteredItems = items.find(element => element.id === parseInt(req.params.id));
+  if (!filteredItems) return res.sendStatus(404)
+  res.send(filteredItems);
 })
 
 server.post('/items', (req, res) => {
